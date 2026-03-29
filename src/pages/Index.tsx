@@ -156,6 +156,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Hospital Map */}
+      <HospitalMap />
+
       {/* Testimonials */}
       <section className="py-16">
         <div className="container">
