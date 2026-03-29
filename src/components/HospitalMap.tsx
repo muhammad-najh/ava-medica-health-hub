@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { MapPin, Heart, Brain, Bone, Baby, SmilePlus, Eye, Siren, FlaskConical, Pill, ScanLine, DoorOpen, Elevator } from 'lucide-react';
+import { MapPin, Heart, Brain, Bone, Baby, SmilePlus, Eye, Siren, FlaskConical, Pill, ScanLine, DoorOpen, ArrowUpDown } from 'lucide-react';
 
 interface MapSection {
   id: string;
@@ -18,7 +18,7 @@ const sections: MapSection[] = [
   { id: 'pharmacy', nameKey: 'pharmacy', icon: Pill, color: 'hsl(150, 60%, 40%)', floor: 0, gridArea: '3 / 5 / 4 / 7' },
   { id: 'lab', nameKey: 'lab', icon: FlaskConical, color: 'hsl(280, 60%, 50%)', floor: 0, gridArea: '3 / 1 / 4 / 3' },
   { id: 'radiology', nameKey: 'radiology', icon: ScanLine, color: 'hsl(200, 80%, 45%)', floor: 0, gridArea: '3 / 3 / 4 / 5' },
-  { id: 'elevator', nameKey: 'elevator', icon: Elevator, color: 'hsl(215, 20%, 50%)', floor: 0, gridArea: '4 / 1 / 5 / 2' },
+  { id: 'elevator', nameKey: 'elevator', icon: ArrowUpDown, color: 'hsl(215, 20%, 50%)', floor: 0, gridArea: '4 / 1 / 5 / 2' },
   { id: 'cardiology', nameKey: 'cardiology', icon: Heart, color: 'hsl(350, 70%, 55%)', floor: 1, gridArea: '1 / 1 / 2 / 3' },
   { id: 'neurology', nameKey: 'neurology', icon: Brain, color: 'hsl(260, 60%, 55%)', floor: 1, gridArea: '1 / 3 / 2 / 5' },
   { id: 'orthopedics', nameKey: 'orthopedics', icon: Bone, color: 'hsl(30, 70%, 50%)', floor: 1, gridArea: '1 / 5 / 2 / 7' },
