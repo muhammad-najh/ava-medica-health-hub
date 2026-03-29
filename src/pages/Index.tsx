@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
+import HospitalMap from '@/components/HospitalMap';
 import { doctors, departments, services, testimonials, blogPosts } from '@/data/hospitalData';
 import heroImg from '@/assets/hero-hospital.jpg';
 import { Heart, Users, Building2, Award, ArrowLeft, ArrowRight, Star, ChevronDown, ChevronUp } from 'lucide-react';
