@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { MapPin, Heart, Brain, Bone, Baby, SmilePlus, Eye, Siren, FlaskConical, Pill, ScanLine, DoorOpen, ArrowUpDown } from 'lucide-react';
+import { Heart, Brain, Bone, Baby, SmilePlus, Eye, Siren, FlaskConical, Pill, ScanLine, DoorOpen, ArrowUpDown, MapPin } from 'lucide-react';
+import deptCardiology from '@/assets/dept-cardiology.jpg';
+import deptNeurology from '@/assets/dept-neurology.jpg';
+import deptOrthopedics from '@/assets/dept-orthopedics.jpg';
+import deptPediatrics from '@/assets/dept-pediatrics.jpg';
+import deptDental from '@/assets/dept-dental.jpg';
+import deptOphthalmology from '@/assets/dept-ophthalmology.jpg';
+import serviceEmergency from '@/assets/service-emergency.jpg';
+import serviceLab from '@/assets/service-lab.jpg';
+import servicePharmacy from '@/assets/service-pharmacy.jpg';
+import serviceRadiology from '@/assets/service-radiology.jpg';
 
 interface MapSection {
   id: string;
@@ -8,23 +18,23 @@ interface MapSection {
   icon: React.ElementType;
   color: string;
   floor: number;
-  gridArea: string;
+  image?: string;
 }
 
 const sections: MapSection[] = [
-  { id: 'entrance', nameKey: 'entrance', icon: DoorOpen, color: 'hsl(215, 100%, 58%)', floor: 0, gridArea: '5 / 3 / 6 / 5' },
-  { id: 'reception', nameKey: 'reception', icon: MapPin, color: 'hsl(215, 60%, 50%)', floor: 0, gridArea: '4 / 2 / 5 / 5' },
-  { id: 'emergency', nameKey: 'emergency', icon: Siren, color: 'hsl(0, 84%, 50%)', floor: 0, gridArea: '4 / 5 / 5 / 7' },
-  { id: 'pharmacy', nameKey: 'pharmacy', icon: Pill, color: 'hsl(150, 60%, 40%)', floor: 0, gridArea: '3 / 5 / 4 / 7' },
-  { id: 'lab', nameKey: 'lab', icon: FlaskConical, color: 'hsl(280, 60%, 50%)', floor: 0, gridArea: '3 / 1 / 4 / 3' },
-  { id: 'radiology', nameKey: 'radiology', icon: ScanLine, color: 'hsl(200, 80%, 45%)', floor: 0, gridArea: '3 / 3 / 4 / 5' },
-  { id: 'elevator', nameKey: 'elevator', icon: ArrowUpDown, color: 'hsl(215, 20%, 50%)', floor: 0, gridArea: '4 / 1 / 5 / 2' },
-  { id: 'cardiology', nameKey: 'cardiology', icon: Heart, color: 'hsl(350, 70%, 55%)', floor: 1, gridArea: '1 / 1 / 2 / 3' },
-  { id: 'neurology', nameKey: 'neurology', icon: Brain, color: 'hsl(260, 60%, 55%)', floor: 1, gridArea: '1 / 3 / 2 / 5' },
-  { id: 'orthopedics', nameKey: 'orthopedics', icon: Bone, color: 'hsl(30, 70%, 50%)', floor: 1, gridArea: '1 / 5 / 2 / 7' },
-  { id: 'pediatrics', nameKey: 'pediatrics', icon: Baby, color: 'hsl(180, 60%, 45%)', floor: 1, gridArea: '2 / 1 / 3 / 3' },
-  { id: 'dental', nameKey: 'dental', icon: SmilePlus, color: 'hsl(45, 80%, 50%)', floor: 1, gridArea: '2 / 3 / 3 / 5' },
-  { id: 'ophthalmology', nameKey: 'ophthalmology', icon: Eye, color: 'hsl(160, 50%, 45%)', floor: 1, gridArea: '2 / 5 / 3 / 7' },
+  { id: 'entrance', nameKey: 'entrance', icon: DoorOpen, color: '#2A7FFF', floor: 0 },
+  { id: 'reception', nameKey: 'reception', icon: MapPin, color: '#4A90D9', floor: 0 },
+  { id: 'emergency', nameKey: 'emergency', icon: Siren, color: '#E53E3E', floor: 0, image: serviceEmergency },
+  { id: 'pharmacy', nameKey: 'pharmacy', icon: Pill, color: '#38A169', floor: 0, image: servicePharmacy },
+  { id: 'lab', nameKey: 'lab', icon: FlaskConical, color: '#805AD5', floor: 0, image: serviceLab },
+  { id: 'radiology', nameKey: 'radiology', icon: ScanLine, color: '#3182CE', floor: 0, image: serviceRadiology },
+  { id: 'elevator', nameKey: 'elevator', icon: ArrowUpDown, color: '#718096', floor: 0 },
+  { id: 'cardiology', nameKey: 'cardiology', icon: Heart, color: '#E53E3E', floor: 1, image: deptCardiology },
+  { id: 'neurology', nameKey: 'neurology', icon: Brain, color: '#805AD5', floor: 1, image: deptNeurology },
+  { id: 'orthopedics', nameKey: 'orthopedics', icon: Bone, color: '#DD6B20', floor: 1, image: deptOrthopedics },
+  { id: 'pediatrics', nameKey: 'pediatrics', icon: Baby, color: '#38B2AC', floor: 1, image: deptPediatrics },
+  { id: 'dental', nameKey: 'dental', icon: SmilePlus, color: '#D69E2E', floor: 1, image: deptDental },
+  { id: 'ophthalmology', nameKey: 'ophthalmology', icon: Eye, color: '#38A169', floor: 1, image: deptOphthalmology },
 ];
 
 const floorLabels: Record<string, Record<number, string>> = {
@@ -39,16 +49,16 @@ const sectionNames: Record<string, Record<string, string>> = {
   ku: { entrance: 'دەروازە', reception: 'پێشوازی', emergency: 'فریاکەوتن', pharmacy: 'دەرمانخانە', lab: 'تاقیگە', radiology: 'تیشک', elevator: 'بەرزکەرەوە', cardiology: 'دڵ', neurology: 'دەمار', orthopedics: 'ئێسک', pediatrics: 'منداڵان', dental: 'ددان', ophthalmology: 'چاو' },
 };
 
-const mapTitle: Record<string, { title: string; subtitle: string; findSection: string }> = {
-  ar: { title: 'خريطة المبنى', subtitle: 'اعثر على القسم بسهولة', findSection: 'ابحث عن قسم' },
-  en: { title: 'Building Map', subtitle: 'Find your section easily', findSection: 'Search for a section' },
-  ku: { title: 'نەخشەی بینا', subtitle: 'بە ئاسانی بەشەکە بدۆزەوە', findSection: 'بگەڕێ بۆ بەشێک' },
+const mapTitle: Record<string, { title: string; subtitle: string; search: string; roomNum: string }> = {
+  ar: { title: 'خريطة المبنى', subtitle: 'اعثر على القسم الذي تبحث عنه بسهولة', search: 'ابحث عن قسم...', roomNum: 'غرفة' },
+  en: { title: 'Building Map', subtitle: 'Find the section you\'re looking for easily', search: 'Search for a section...', roomNum: 'Room' },
+  ku: { title: 'نەخشەی بینا', subtitle: 'بە ئاسانی ئەو بەشەی دەتەوێت بدۆزەوە', search: 'بگەڕێ بۆ بەشێک...', roomNum: 'ژوور' },
 };
 
 const HospitalMap = () => {
   const { lang } = useLanguage();
   const [activeFloor, setActiveFloor] = useState(0);
-  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   const txt = mapTitle[lang];
@@ -56,109 +66,145 @@ const HospitalMap = () => {
   const floors = floorLabels[lang];
 
   const floorSections = sections.filter(s => s.floor === activeFloor);
-  const filtered = searchTerm
-    ? floorSections.filter(s => names[s.nameKey]?.includes(searchTerm))
+  const displaySections = searchTerm
+    ? floorSections.filter(s => names[s.nameKey]?.toLowerCase().includes(searchTerm.toLowerCase()))
     : floorSections;
 
-  const highlightedId = searchTerm
-    ? sections.find(s => names[s.nameKey]?.includes(searchTerm))?.id
-    : hoveredSection;
+  const selected = selectedSection ? sections.find(s => s.id === selectedSection) : null;
 
   return (
-    <section className="py-16">
+    <section className="py-16 bg-secondary">
       <div className="container">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-foreground mb-2">{txt.title}</h2>
           <p className="text-muted-foreground">{txt.subtitle}</p>
         </div>
 
-        {/* Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-          {/* Floor toggle */}
-          <div className="flex bg-secondary rounded-lg p-1">
-            {[0, 1].map(f => (
-              <button
-                key={f}
-                onClick={() => setActiveFloor(f)}
-                className={`px-5 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeFloor === f ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {floors[f]}
-              </button>
-            ))}
-          </div>
-
-          {/* Search */}
-          <input
-            type="text"
-            placeholder={txt.findSection}
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="px-4 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary w-full sm:w-64"
-          />
-        </div>
-
-        {/* Map */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-secondary/50 border-2 border-border rounded-2xl p-4 sm:p-8 relative">
-            {/* Floor label */}
-            <div className="absolute top-4 start-4 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
-              {floors[activeFloor]}
-            </div>
-
-            {/* Grid map */}
-            <div className="grid grid-cols-6 grid-rows-5 gap-2 mt-8" style={{ minHeight: 360 }}>
-              {floorSections.map(section => {
-                const Icon = section.icon;
-                const isHighlighted = highlightedId === section.id;
-                const isSearchMatch = searchTerm && names[section.nameKey]?.includes(searchTerm);
-
-                return (
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-card rounded-2xl shadow-card overflow-hidden">
+            {/* Header with floor tabs & search */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 border-b border-border">
+              <div className="flex bg-secondary rounded-lg p-1">
+                {[0, 1].map(f => (
                   <button
-                    key={section.id}
-                    style={{
-                      gridArea: section.gridArea,
-                      backgroundColor: isHighlighted ? section.color : `${section.color}22`,
-                      borderColor: section.color,
-                    }}
-                    className={`rounded-xl border-2 flex flex-col items-center justify-center gap-1.5 p-3 transition-all duration-300 cursor-pointer ${
-                      isHighlighted ? 'scale-105 shadow-elevated' : 'hover:scale-[1.02]'
-                    } ${isSearchMatch ? 'ring-4 ring-primary/40' : ''}`}
-                    onMouseEnter={() => setHoveredSection(section.id)}
-                    onMouseLeave={() => setHoveredSection(null)}
+                    key={f}
+                    onClick={() => { setActiveFloor(f); setSelectedSection(null); }}
+                    className={`px-5 py-2 rounded-md text-sm font-medium transition-all ${
+                      activeFloor === f
+                        ? 'bg-primary text-primary-foreground shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
                   >
-                    <Icon
-                      className="w-6 h-6 sm:w-8 sm:h-8 transition-colors"
-                      style={{ color: isHighlighted ? '#fff' : section.color }}
-                    />
-                    <span
-                      className="text-xs sm:text-sm font-semibold text-center leading-tight transition-colors"
-                      style={{ color: isHighlighted ? '#fff' : section.color }}
-                    >
-                      {names[section.nameKey]}
-                    </span>
+                    {floors[f]}
                   </button>
-                );
-              })}
+                ))}
+              </div>
+              <input
+                type="text"
+                placeholder={txt.search}
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className="px-4 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary sm:w-56"
+              />
             </div>
-          </div>
 
-          {/* Legend */}
-          <div className="flex flex-wrap justify-center gap-3 mt-6">
-            {sections
-              .filter(s => s.floor === activeFloor)
-              .map(s => (
-                <button
-                  key={s.id}
-                  onMouseEnter={() => setHoveredSection(s.id)}
-                  onMouseLeave={() => setHoveredSection(null)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card border border-border text-xs font-medium text-foreground hover:shadow-card transition-all"
-                >
-                  <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
-                  {names[s.nameKey]}
-                </button>
-              ))}
+            <div className="flex flex-col lg:flex-row">
+              {/* Section list */}
+              <div className="flex-1 p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                  {displaySections.map(section => {
+                    const Icon = section.icon;
+                    const isActive = selectedSection === section.id;
+
+                    return (
+                      <button
+                        key={section.id}
+                        onClick={() => setSelectedSection(isActive ? null : section.id)}
+                        className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200 ${
+                          isActive
+                            ? 'border-primary bg-accent shadow-sm scale-[1.03]'
+                            : 'border-border bg-background hover:border-primary/40 hover:bg-accent/50'
+                        }`}
+                      >
+                        <div
+                          className="w-12 h-12 rounded-full flex items-center justify-center"
+                          style={{ backgroundColor: `${section.color}18` }}
+                        >
+                          <Icon className="w-6 h-6" style={{ color: section.color }} />
+                        </div>
+                        <span className="text-sm font-medium text-foreground text-center leading-tight">
+                          {names[section.nameKey]}
+                        </span>
+                        {isActive && (
+                          <div className="absolute -top-1 -end-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                            <MapPin className="w-3 h-3 text-primary-foreground" />
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Detail panel */}
+              {selected && selected.image && (
+                <div className="lg:w-80 border-t lg:border-t-0 lg:border-s border-border p-4">
+                  <div className="rounded-xl overflow-hidden">
+                    <img
+                      src={selected.image}
+                      alt={names[selected.nameKey]}
+                      loading="lazy"
+                      className="w-full h-44 object-cover"
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center"
+                        style={{ backgroundColor: `${selected.color}18` }}
+                      >
+                        <selected.icon className="w-4 h-4" style={{ color: selected.color }} />
+                      </div>
+                      <h3 className="font-semibold text-foreground text-lg">{names[selected.nameKey]}</h3>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>{floors[selected.floor]}</span>
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {txt.roomNum} {selected.floor === 0 ? 'G' : '1'}{(sections.indexOf(selected) + 1).toString().padStart(2, '0')}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Visual floor map bar */}
+            <div className="p-4 border-t border-border bg-secondary/50">
+              <div className="flex gap-1.5 overflow-x-auto pb-1">
+                {floorSections.map(section => {
+                  const isActive = selectedSection === section.id;
+                  return (
+                    <button
+                      key={section.id}
+                      onClick={() => setSelectedSection(isActive ? null : section.id)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
+                        isActive
+                          ? 'text-primary-foreground shadow-sm'
+                          : 'bg-background text-foreground border border-border hover:border-primary/40'
+                      }`}
+                      style={isActive ? { backgroundColor: section.color } : undefined}
+                    >
+                      <span
+                        className="w-2 h-2 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: isActive ? '#fff' : section.color }}
+                      />
+                      {names[section.nameKey]}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
