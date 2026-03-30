@@ -13,10 +13,10 @@ const Footer = () => {
           {/* About */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src={hospitalLogo} alt="The English Hospital" className="h-12 w-12 rounded-full object-cover border-2 border-primary/30" />
+              <img src={hospitalLogo} alt="The English Hospital" className="h-16 w-16 rounded-full object-cover border-2 border-primary/30" />
               <div>
-                <h3 className="text-lg font-bold text-primary">The English</h3>
-                <span className="text-xs text-background/70">Hospital</span>
+                <h3 className="text-xl font-bold text-primary">The English</h3>
+                <span className="text-sm text-background/70">Hospital</span>
               </div>
             </div>
             <p className="text-background/70 text-sm leading-relaxed">{t.footer.aboutDesc}</p>
