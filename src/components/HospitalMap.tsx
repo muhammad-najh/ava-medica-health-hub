@@ -454,43 +454,9 @@ const HospitalMap = () => {
                 {/* ═══ 360° PANORAMIC VIEW ═══ */}
                 {activeTab === '360' && currentSpot && (
                   <div>
-                    {/* Location bar */}
-                    <div className="flex items-center justify-between gap-3 mb-3 px-1">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${currentSpot.color}18` }}>
-                          <currentSpot.icon className="w-4 h-4" style={{ color: currentSpot.color }} />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-foreground leading-tight">{names[currentSpot.nameKey]}</p>
-                          <p className="text-[10px] text-muted-foreground">{txt.floor} {floorLabel} · {txt.youAreHere}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {/* Auto-rotate */}
-                        <button
-                          onClick={() => setAutoRotate(!autoRotate)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                            autoRotate ? 'bg-primary text-primary-foreground' : 'bg-secondary text-foreground border border-border hover:border-primary/40'
-                          }`}
-                        >
-                          {autoRotate ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-                          {txt.autoRotate}
-                        </button>
-                        {currentSpotId !== (defaultSpotPerFloor[activeFloor] || 'lobby') && (
-                          <button
-                            onClick={() => navigateTo(defaultSpotPerFloor[activeFloor] || 'lobby')}
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
-                          >
-                            <Home className="w-3.5 h-3.5" />
-                            {txt.backToLobby}
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Panoramic viewer */}
+                    {/* Panoramic viewer — immersive, minimal chrome */}
                     <div
-                      className={`relative w-full h-[300px] sm:h-[380px] md:h-[440px] rounded-xl overflow-hidden cursor-grab active:cursor-grabbing select-none transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}
+                      className={`relative w-full h-[340px] sm:h-[420px] md:h-[500px] rounded-xl overflow-hidden cursor-grab active:cursor-grabbing select-none transition-opacity duration-500 ${transitioning ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'}`}
                       onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={handlePointerUp}
@@ -504,86 +470,110 @@ const HospitalMap = () => {
                         draggable={false}
                       />
 
-                      {/* Vignette */}
+                      {/* Subtle vignette */}
                       <div className="absolute inset-0 pointer-events-none" style={{
-                        background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.3) 100%)'
+                        background: 'radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.15) 100%)'
                       }} />
 
-                      {/* Hotspot arrows */}
+                      {/* ── White circle floor spots (no arrows) ── */}
                       {currentSpot.hotspots.map((hotspot, i) => {
                         const target = tourSpots.find(s => s.id === hotspot.targetId);
                         if (!target) return null;
-                        const Icon = hotspot.direction === 'up' ? ChevronUp : MoveRight;
                         return (
                           <button
                             key={i}
                             onClick={(e) => { e.stopPropagation(); navigateTo(hotspot.targetId); }}
                             className="absolute group z-10 pointer-events-auto"
                             style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%`, transform: 'translate(-50%, -50%)' }}
+                            title={names[target.nameKey]}
                           >
-                            <span className="absolute inset-0 rounded-full animate-ping opacity-30" style={{ backgroundColor: target.color }} />
-                            <div className="relative flex flex-col items-center gap-1">
-                              <div
-                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-lg border-2 border-white/80 backdrop-blur-sm transition-transform group-hover:scale-110"
-                                style={{ backgroundColor: `${target.color}dd` }}
-                              >
-                                <Icon
-                                  className="w-6 h-6 sm:w-7 sm:h-7 text-white"
-                                  style={{ transform: `rotate(${directionRotation[hotspot.direction]})` }}
-                                />
-                              </div>
-                              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold text-white shadow-lg whitespace-nowrap backdrop-blur-sm" style={{ backgroundColor: `${target.color}cc` }}>
-                                {names[target.nameKey]}
-                              </span>
-                            </div>
+                            {/* Outer pulse ring */}
+                            <span className="absolute inset-[-6px] rounded-full border-2 border-white/40 animate-ping" />
+                            {/* Inner glowing dot */}
+                            <span className="relative block w-5 h-5 rounded-full bg-white/90 shadow-[0_0_12px_rgba(255,255,255,0.6)] group-hover:bg-white group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.8)] transition-all duration-200" />
+                            {/* Label on hover */}
+                            <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] font-medium text-white bg-black/50 backdrop-blur-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                              {names[target.nameKey]}
+                            </span>
                           </button>
                         );
                       })}
 
-                      {/* Bottom gradient */}
-                      <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
-
-                      {/* Drag hint */}
-                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-sm text-white text-[10px] px-3 py-1 rounded-full pointer-events-none">
-                        {txt.dragHint}
+                      {/* ── Directional look controls (circle pad) ── */}
+                      <div className="absolute bottom-4 end-4 z-20 pointer-events-auto">
+                        <div className="relative w-[88px] h-[88px]">
+                          {/* Up */}
+                          <button
+                            onClick={() => {/* vertical pan not applicable for horizontal pano */}}
+                            className="absolute top-0 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-black/50 hover:text-white transition-colors"
+                          >
+                            <ChevronUp className="w-4 h-4" />
+                          </button>
+                          {/* Down */}
+                          <button
+                            onClick={() => {/* vertical pan not applicable */}}
+                            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-black/50 hover:text-white transition-colors"
+                          >
+                            <ChevronDown className="w-4 h-4" />
+                          </button>
+                          {/* Left */}
+                          <button
+                            onClick={() => setOffset(o => o + 150)}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-black/50 hover:text-white transition-colors"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </button>
+                          {/* Right */}
+                          <button
+                            onClick={() => setOffset(o => o - 150)}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-black/50 hover:text-white transition-colors"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                          {/* Center — reset */}
+                          <button
+                            onClick={() => { setOffset(0); setAutoRotate(false); }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-black/50 hover:text-white transition-colors"
+                          >
+                            <RotateCcw className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
 
-                      {/* Reset */}
+                      {/* ── Auto-rotate play/pause (top-left, subtle) ── */}
                       <button
-                        onClick={() => { setOffset(0); setAutoRotate(false); }}
-                        className="absolute top-3 end-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+                        onClick={() => setAutoRotate(!autoRotate)}
+                        className="absolute top-3 start-3 z-20 w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-black/50 hover:text-white transition-colors"
                       >
-                        <RotateCcw className="w-4 h-4" />
+                        {autoRotate ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ms-0.5" />}
                       </button>
+
+                      {/* ── Subtle location label (bottom-left) ── */}
+                      <div className="absolute bottom-3 start-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/25 backdrop-blur-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/70" />
+                        <span className="text-[10px] text-white/80 font-medium">{names[currentSpot.nameKey]}</span>
+                      </div>
                     </div>
 
-                    {/* Room thumbnails for current floor */}
-                    <div className="flex gap-2 overflow-x-auto pt-3 pb-1">
+                    {/* Room thumbnails — small, subtle */}
+                    <div className="flex gap-1.5 overflow-x-auto pt-2 pb-1">
                       {floorTourSpots.map(spot => {
                         const isActive = currentSpotId === spot.id;
-                        const SpotIcon = spot.icon;
                         return (
                           <button
                             key={spot.id}
                             onClick={() => navigateTo(spot.id)}
-                            className={`relative flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                              isActive ? 'border-primary shadow-md' : 'border-border hover:border-primary/40'
+                            className={`relative flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden transition-all ${
+                              isActive ? 'ring-2 ring-primary shadow-md' : 'opacity-70 hover:opacity-100'
                             }`}
                           >
                             <img src={spot.image} alt={names[spot.nameKey]} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-0.5">
-                              <SpotIcon className="w-4 h-4 text-white" />
-                              <span className="text-[9px] text-white font-medium leading-tight">{names[spot.nameKey]}</span>
+                            <div className="absolute inset-0 bg-black/30 flex items-end p-1">
+                              <span className="text-[8px] text-white font-medium leading-tight">{names[spot.nameKey]}</span>
                             </div>
-                            {isActive && (
-                              <div className="absolute top-1 end-1 w-2 h-2 rounded-full bg-primary" />
-                            )}
                           </button>
                         );
                       })}
-                    </div>
-                  </div>
-                )}
 
                 {/* ═══ SVG FLOOR PLAN ═══ */}
                 {activeTab === 'map' && (
