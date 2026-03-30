@@ -40,11 +40,11 @@ const Navbar = () => {
 
       {/* Main navbar */}
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center gap-2.5">
-          <img src={hospitalLogo} alt="The English Hospital" className="h-10 w-10 rounded-full object-cover shadow-sm" />
+        <Link to="/" className="flex items-center gap-3">
+          <img src={hospitalLogo} alt="The English Hospital" className="h-14 w-14 rounded-full object-cover shadow-md border-2 border-primary/20" />
           <div className="flex flex-col leading-tight">
-            <span className="text-lg font-bold text-primary tracking-tight">The English</span>
-            <span className="text-xs font-semibold text-muted-foreground -mt-0.5">Hospital</span>
+            <span className="text-xl font-bold text-primary tracking-tight">The English</span>
+            <span className="text-sm font-semibold text-muted-foreground -mt-0.5">Hospital</span>
           </div>
         </Link>
 
