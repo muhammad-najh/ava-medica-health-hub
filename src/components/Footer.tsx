@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import hospitalLogo from '@/assets/hospital-logo.jpeg';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -11,9 +12,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-xl font-bold mb-4">
-              <span className="text-primary">Ava</span>Medica
-            </h3>
+            <div className="flex items-center gap-3 mb-4">
+              <img src={hospitalLogo} alt="The English Hospital" className="h-12 w-12 rounded-full object-cover border-2 border-primary/30" />
+              <div>
+                <h3 className="text-lg font-bold text-primary">The English</h3>
+                <span className="text-xs text-background/70">Hospital</span>
+              </div>
+            </div>
             <p className="text-background/70 text-sm leading-relaxed">{t.footer.aboutDesc}</p>
           </div>
 
