@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Language } from '@/i18n/translations';
 import { Menu, X, Search, Phone, Globe } from 'lucide-react';
+import hospitalLogo from '@/assets/hospital-logo.jpeg';
 
 const langLabels: Record<Language, string> = { ar: 'عربی', en: 'English', ku: 'کوردی' };
 
@@ -39,8 +40,12 @@ const Navbar = () => {
 
       {/* Main navbar */}
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="text-2xl font-bold text-primary">
-          Ava<span className="text-foreground">Medica</span>
+        <Link to="/" className="flex items-center gap-2.5">
+          <img src={hospitalLogo} alt="The English Hospital" className="h-10 w-10 rounded-full object-cover shadow-sm" />
+          <div className="flex flex-col leading-tight">
+            <span className="text-lg font-bold text-primary tracking-tight">The English</span>
+            <span className="text-xs font-semibold text-muted-foreground -mt-0.5">Hospital</span>
+          </div>
         </Link>
 
         {/* Desktop links */}
