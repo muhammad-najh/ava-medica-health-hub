@@ -12,12 +12,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <img src={hospitalLogo} alt="The English Hospital" className="h-16 w-16 rounded-full object-cover border-2 border-primary/30" />
-              <div>
-                <h3 className="text-xl font-bold text-primary">The English</h3>
-                <span className="text-sm text-background/70">Hospital</span>
-              </div>
+            <div className="mb-4">
+              <img src={hospitalLogo} alt="The English Hospital" className="h-20 w-auto object-contain brightness-0 invert" />
             </div>
             <p className="text-background/70 text-sm leading-relaxed">{t.footer.aboutDesc}</p>
           </div>
