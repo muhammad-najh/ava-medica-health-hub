@@ -160,8 +160,6 @@ const Index = () => {
       {/* Hospital Map */}
       <HospitalMap />
 
-      {/* Virtual Tour */}
-      <VirtualTour />
 
       {/* Testimonials */}
       <section className="py-16">
