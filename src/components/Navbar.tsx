@@ -39,10 +39,10 @@ const Navbar = () => {
       </div>
 
       {/* Main navbar */}
-      <div className="container flex items-center justify-between h-[72px]">
-        {/* Logo card */}
+      <div className="container flex items-center justify-between h-[80px]">
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-secondary/50 transition-colors">
-          <img src={hospitalLogo} alt="The English Hospital" className="h-20 w-20 rounded-xl object-cover" />
+          <img src={hospitalLogo} alt="The English Hospital" className="h-16 w-16 rounded-xl object-contain" />
           <div className="hidden sm:flex flex-col leading-tight">
             <span className="text-sm font-bold text-primary tracking-tight leading-none">The English</span>
             <span className="text-[11px] font-medium text-muted-foreground leading-none mt-0.5">Hospital</span>
