@@ -39,9 +39,14 @@ const Navbar = () => {
       </div>
 
       {/* Main navbar */}
-      <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center gap-3">
-          <img src={hospitalLogo} alt="The English Hospital" className="h-14 w-auto object-contain" />
+      <div className="container flex items-center justify-between h-[72px]">
+        {/* Logo card */}
+        <Link to="/" className="flex items-center gap-3 bg-card border border-border rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-shadow">
+          <img src={hospitalLogo} alt="The English Hospital" className="h-11 w-11 rounded-lg object-cover" />
+          <div className="hidden sm:flex flex-col leading-tight">
+            <span className="text-sm font-bold text-primary tracking-tight leading-none">The English</span>
+            <span className="text-[11px] font-semibold text-foreground/80 leading-none mt-0.5">Hospital</span>
+          </div>
         </Link>
 
         {/* Desktop links */}
