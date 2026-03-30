@@ -574,6 +574,9 @@ const HospitalMap = () => {
                           </button>
                         );
                       })}
+                    </div>
+                  </div>
+                )}
 
                 {/* ═══ SVG FLOOR PLAN ═══ */}
                 {activeTab === 'map' && (
