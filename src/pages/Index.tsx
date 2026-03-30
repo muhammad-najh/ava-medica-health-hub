@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import HospitalMap from '@/components/HospitalMap';
-import VirtualTour from '@/components/VirtualTour';
+
 import { doctors, departments, services, testimonials, blogPosts } from '@/data/hospitalData';
 import heroImg from '@/assets/hero-hospital.jpg';
 import { Heart, Users, Building2, Award, ArrowLeft, ArrowRight, Star, ChevronDown, ChevronUp } from 'lucide-react';
@@ -160,8 +160,6 @@ const Index = () => {
       {/* Hospital Map */}
       <HospitalMap />
 
-      {/* Virtual Tour */}
-      <VirtualTour />
 
       {/* Testimonials */}
       <section className="py-16">
