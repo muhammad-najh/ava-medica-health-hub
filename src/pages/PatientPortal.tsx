@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { FileText, Download, User, LogOut, Calendar as CalendarIcon, ShieldCheck, Activity, Clock } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FileText, Download, User, LogOut, Calendar as CalendarIcon, ShieldCheck, Activity, Clock, Filter } from 'lucide-react';
 import patientPortalHero from '@/assets/patient-portal-hero.jpg';
 
 const mockReports = [
@@ -19,7 +20,24 @@ const PatientPortal = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [patientId, setPatientId] = useState('');
   const [dob, setDob] = useState('');
+  const [filterYear, setFilterYear] = useState('all');
+  const [filterMonth, setFilterMonth] = useState('all');
+  const [filterDay, setFilterDay] = useState('all');
   const nameKey = lang === 'ar' ? 'Ar' : lang === 'ku' ? 'Ku' : 'En';
+
+  const years = [...new Set(mockReports.map(r => r.date.split('-')[0]))];
+  const months = [...new Set(mockReports.map(r => r.date.split('-')[1]))];
+  const days = [...new Set(mockReports.map(r => r.date.split('-')[2]))];
+
+  const filteredReports = useMemo(() => {
+    return mockReports.filter(r => {
+      const [y, m, d] = r.date.split('-');
+      if (filterYear !== 'all' && y !== filterYear) return false;
+      if (filterMonth !== 'all' && m !== filterMonth) return false;
+      if (filterDay !== 'all' && d !== filterDay) return false;
+      return true;
+    });
+  }, [filterYear, filterMonth, filterDay]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,27 +133,8 @@ const PatientPortal = () => {
             </Button>
           </div>
 
-          {/* Quick stats */}
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            <Card className="bg-card/80">
-              <CardContent className="p-4 flex items-center gap-3">
-                <FileText className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-2xl font-bold text-foreground">{mockReports.length}</p>
-                  <p className="text-xs text-muted-foreground">{portal.totalReports}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="bg-card/80">
-              <CardContent className="p-4 flex items-center gap-3">
-                <ShieldCheck className="w-5 h-5 text-green-500" />
-                <div>
-                  <p className="text-sm font-semibold text-green-600">{portal.allReady}</p>
-                  <p className="text-xs text-muted-foreground">{portal.reportStatus}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+        </div>
+      </div>
         </div>
       </div>
 
