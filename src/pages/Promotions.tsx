@@ -2,7 +2,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Percent, Heart, Calendar, Star, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Percent, Heart, Calendar, Star, ArrowLeft, ArrowRight, Sparkles, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import promotionsHero from '@/assets/promotions-hero.jpg';
 
@@ -26,7 +26,9 @@ const Promotions = () => {
       newPrice: 175,
       validUntil: '2026-06-30',
       icon: Heart,
-      category: 'package',
+      gradient: 'from-rose-500/10 to-pink-500/10',
+      iconBg: 'bg-rose-500/10',
+      iconColor: 'text-rose-500',
     },
     {
       id: 2,
@@ -40,8 +42,10 @@ const Promotions = () => {
       originalPrice: 120,
       newPrice: 90,
       validUntil: '2026-05-31',
-      icon: Star,
-      category: 'package',
+      icon: Sparkles,
+      gradient: 'from-primary/10 to-blue-500/10',
+      iconBg: 'bg-primary/10',
+      iconColor: 'text-primary',
     },
     {
       id: 3,
@@ -51,48 +55,14 @@ const Promotions = () => {
       descAr: 'فحص شامل للأسنان مع جلسة تنظيف مجانية للمرضى الجدد',
       descEn: 'Complete dental examination with free cleaning session for new patients',
       descKu: 'پشکنینی تەواوی ددان لەگەڵ دانیشتنی پاککردنەوەی بەخۆڕایی بۆ نەخۆشە نوێیەکان',
-      discount: 0,
+      discount: 38,
       originalPrice: 80,
       newPrice: 50,
       validUntil: '2026-07-15',
       icon: Star,
-      category: 'package',
-    },
-  ];
-
-  const campaigns = [
-    {
-      id: 1,
-      titleAr: 'شهر التوعية بصحة القلب',
-      titleEn: 'Heart Health Awareness Month',
-      titleKu: 'مانگی ئاگاداربوون لە تەندروستی دڵ',
-      descAr: 'فحوصات مجانية للقلب وورش عمل توعوية طوال شهر مايو',
-      descEn: 'Free cardiac screenings and educational workshops throughout May',
-      descKu: 'پشکنینی بەخۆڕایی دڵ و وۆرکشۆپی فێرکاری بە درێژایی مانگی ئایار',
-      date: '2026-05-01',
-      color: 'bg-destructive/10 text-destructive',
-    },
-    {
-      id: 2,
-      titleAr: 'حملة التطعيم الموسمية',
-      titleEn: 'Seasonal Vaccination Campaign',
-      titleKu: 'کەمپینی ڤاکسینی وەرزی',
-      descAr: 'تطعيمات الإنفلونزا وفيروسات الموسم متاحة الآن بأسعار رمزية',
-      descEn: 'Flu and seasonal virus vaccinations now available at subsidized prices',
-      descKu: 'ڤاکسینی ئینفلوینزا و ڤایرۆسی وەرزی ئێستا بەردەستە بە نرخی یارمەتیدراو',
-      date: '2026-04-15',
-      color: 'bg-primary/10 text-primary',
-    },
-    {
-      id: 3,
-      titleAr: 'يوم صحة المرأة',
-      titleEn: "Women's Health Day",
-      titleKu: 'ڕۆژی تەندروستی ژنان',
-      descAr: 'فحوصات نسائية مجانية واستشارات مع أفضل الأطباء',
-      descEn: 'Free gynecological screenings and consultations with top specialists',
-      descKu: 'پشکنینی بەخۆڕایی ژنان و ڕاوێژکاری لەگەڵ باشترین پسپۆڕان',
-      date: '2026-06-10',
-      color: 'bg-accent text-accent-foreground',
+      gradient: 'from-amber-500/10 to-orange-500/10',
+      iconBg: 'bg-amber-500/10',
+      iconColor: 'text-amber-500',
     },
   ];
 
@@ -101,64 +71,74 @@ const Promotions = () => {
   return (
     <div>
       {/* Hero */}
-      <div className="relative overflow-hidden bg-primary/5 min-h-[260px] flex items-center">
-        <img src={promotionsHero} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" width={1280} height={512} />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        <div className="container relative z-10 py-16">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-              <Percent className="w-6 h-6 text-primary" />
-            </div>
-            <Badge variant="secondary" className="text-sm">{promo.badge}</Badge>
+      <div className="relative overflow-hidden min-h-[300px] flex items-center">
+        <img src={promotionsHero} alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" width={1280} height={512} />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background/90 to-background" />
+        <div className="container relative z-10 py-20 text-center">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-semibold mb-5">
+            <Tag className="w-4 h-4" />
+            {promo.badge}
           </div>
-          <h1 className="text-4xl font-bold text-foreground mb-3">{promo.title}</h1>
-          <p className="text-lg text-muted-foreground max-w-xl">{promo.subtitle}</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">{promo.title}</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{promo.subtitle}</p>
         </div>
       </div>
 
-      {/* Special Offers */}
-      <section className="container py-12">
-        <h2 className="text-2xl font-bold text-foreground mb-2">{promo.offersTitle}</h2>
-        <p className="text-muted-foreground mb-8">{promo.offersSubtitle}</p>
+      {/* Offers */}
+      <section className="container py-14">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-bold text-foreground mb-2">{promo.offersTitle}</h2>
+          <p className="text-muted-foreground">{promo.offersSubtitle}</p>
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {offers.map(offer => {
             const Icon = offer.icon;
             return (
-              <Card key={offer.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden border-primary/10">
-                <CardContent className="p-0">
-                  {/* Discount badge */}
+              <Card key={offer.id} className="group relative overflow-hidden border-0 shadow-md hover:shadow-xl transition-all duration-300">
+                {/* Background gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${offer.gradient} opacity-50`} />
+
+                <CardContent className="relative p-0">
+                  {/* Discount ribbon */}
                   {offer.discount > 0 && (
-                    <div className="bg-destructive text-destructive-foreground text-center py-2 text-sm font-bold">
-                      {offer.discount}% {promo.off}
+                    <div className="absolute top-4 end-4 z-10">
+                      <div className="bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                        <Percent className="w-3 h-3" />
+                        {offer.discount}% {promo.off}
+                      </div>
                     </div>
                   )}
-                  <div className="p-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                      <Icon className="w-6 h-6 text-primary" />
+
+                  <div className="p-7">
+                    {/* Icon */}
+                    <div className={`w-14 h-14 rounded-2xl ${offer.iconBg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
+                      <Icon className={`w-7 h-7 ${offer.iconColor}`} />
                     </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">
+
+                    {/* Title & Description */}
+                    <h3 className="text-xl font-bold text-foreground mb-3">
                       {offer[`title${nameKey}` as keyof typeof offer] as string}
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                    <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
                       {offer[`desc${nameKey}` as keyof typeof offer] as string}
                     </p>
 
                     {/* Pricing */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-2xl font-bold text-primary">${offer.newPrice}</span>
-                      <span className="text-sm text-muted-foreground line-through">${offer.originalPrice}</span>
+                    <div className="flex items-end gap-2 mb-2">
+                      <span className="text-3xl font-bold text-foreground">${offer.newPrice}</span>
+                      <span className="text-base text-muted-foreground line-through mb-1">${offer.originalPrice}</span>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {promo.validUntil}: {offer.validUntil}
-                      </span>
+                    {/* Valid until */}
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {promo.validUntil}: {offer.validUntil}
                     </div>
 
+                    {/* CTA */}
                     <Link to="/appointment">
-                      <Button className="w-full mt-4 gap-2">
+                      <Button className="w-full h-11 gap-2 text-sm font-semibold">
                         {promo.bookNow}
                         <Arrow className="w-4 h-4" />
                       </Button>
@@ -171,46 +151,23 @@ const Promotions = () => {
         </div>
       </section>
 
-      {/* Health Campaigns */}
-      <section className="bg-muted/30 border-y border-border">
-        <div className="container py-12">
-          <h2 className="text-2xl font-bold text-foreground mb-2">{promo.campaignsTitle}</h2>
-          <p className="text-muted-foreground mb-8">{promo.campaignsSubtitle}</p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {campaigns.map(campaign => (
-              <Card key={campaign.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <Badge className={`${campaign.color} mb-4`}>
-                    {campaign.date}
-                  </Badge>
-                  <h3 className="text-lg font-bold text-foreground mb-2">
-                    {campaign[`title${nameKey}` as keyof typeof campaign] as string}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {campaign[`desc${nameKey}` as keyof typeof campaign] as string}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+      {/* CTA Banner */}
+      <section className="bg-primary/5 border-y border-border">
+        <div className="container py-14 text-center">
+          <Percent className="w-10 h-10 text-primary mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-foreground mb-3">{promo.ctaTitle}</h2>
+          <p className="text-muted-foreground mb-8 max-w-lg mx-auto">{promo.ctaSubtitle}</p>
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <Link to="/appointment">
+              <Button size="lg" className="gap-2 h-12 px-8">
+                {promo.bookNow}
+                <Arrow className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="h-12 px-8">{promo.contactUs}</Button>
+            </Link>
           </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="container py-12 text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-3">{promo.ctaTitle}</h2>
-        <p className="text-muted-foreground mb-6 max-w-md mx-auto">{promo.ctaSubtitle}</p>
-        <div className="flex items-center justify-center gap-4">
-          <Link to="/appointment">
-            <Button size="lg" className="gap-2">
-              {promo.bookNow}
-              <Arrow className="w-4 h-4" />
-            </Button>
-          </Link>
-          <Link to="/contact">
-            <Button size="lg" variant="outline">{promo.contactUs}</Button>
-          </Link>
         </div>
       </section>
     </div>
