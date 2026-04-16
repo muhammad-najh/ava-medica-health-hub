@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FileText, Download, User, LogOut, Calendar as CalendarIcon, ShieldCheck, Activity, Clock, Filter } from 'lucide-react';
 import patientPortalHero from '@/assets/patient-portal-hero.jpg';
+import patientDashboardHero from '@/assets/patient-dashboard-hero.jpg';
 
 const mockReports = [
   { id: 1, typeAr: 'تحليل دم شامل', typeEn: 'Complete Blood Count', typeKu: 'شیکردنەوەی خوێنی تەواو', date: '2026-03-20', status: 'ready', category: 'lab' },
