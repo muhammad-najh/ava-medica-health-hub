@@ -170,6 +170,13 @@ export const translations = {
       allReady: 'جميعها جاهزة',
       reportStatus: 'حالة التقارير',
       ready: 'جاهز',
+      year: 'السنة',
+      month: 'الشهر',
+      day: 'اليوم',
+      allYears: 'كل السنوات',
+      allMonths: 'كل الأشهر',
+      allDays: 'كل الأيام',
+      noResults: 'لا توجد تقارير مطابقة',
     },
     footer: {
       about: 'عن المستشفى الإنجليزي',
