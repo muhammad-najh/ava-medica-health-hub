@@ -116,9 +116,9 @@ const PatientPortal = () => {
   return (
     <div className="min-h-[70vh]">
       {/* Dashboard header with hero image */}
-      <div className="relative overflow-hidden border-b border-border">
-        <img src={patientDashboardHero} alt="" className="absolute inset-0 w-full h-full object-cover opacity-15" width={1280} height={512} />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70" />
+      <div className="relative overflow-hidden border-b border-border min-h-[180px]">
+        <img src={patientDashboardHero} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" width={1280} height={512} />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-transparent" />
         <div className="container py-10 relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
