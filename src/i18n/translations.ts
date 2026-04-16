@@ -15,6 +15,8 @@ export const translations = {
       blog: 'المدونة',
       search: 'بحث...',
       emergency: 'طوارئ',
+      medicalServices: 'الخدمات الطبية',
+      about: 'حول',
     },
     hero: {
       title: 'صحتك، أولويتنا',
@@ -195,6 +197,8 @@ export const translations = {
       blog: 'Blog',
       search: 'Search...',
       emergency: 'Emergency',
+      medicalServices: 'Medical Services',
+      about: 'About',
     },
     hero: {
       title: 'Your Health, Our Priority',
@@ -375,6 +379,8 @@ export const translations = {
       blog: 'بلۆگ',
       search: 'گەڕان...',
       emergency: 'فریاکەوتن',
+      medicalServices: 'خزمەتگوزارییە پزیشکییەکان',
+      about: 'دەربارە',
     },
     hero: {
       title: 'تەندروستیت، ئەولەویەتی ئێمەیە',
