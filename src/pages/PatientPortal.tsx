@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { FileText, Download, User, LogOut, Calendar as CalendarIcon, ShieldCheck, Activity, Clock } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FileText, Download, User, LogOut, Calendar as CalendarIcon, ShieldCheck, Activity, Clock, Filter } from 'lucide-react';
 import patientPortalHero from '@/assets/patient-portal-hero.jpg';
 
 const mockReports = [
@@ -19,7 +20,24 @@ const PatientPortal = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [patientId, setPatientId] = useState('');
   const [dob, setDob] = useState('');
+  const [filterYear, setFilterYear] = useState('all');
+  const [filterMonth, setFilterMonth] = useState('all');
+  const [filterDay, setFilterDay] = useState('all');
   const nameKey = lang === 'ar' ? 'Ar' : lang === 'ku' ? 'Ku' : 'En';
+
+  const years = [...new Set(mockReports.map(r => r.date.split('-')[0]))];
+  const months = [...new Set(mockReports.map(r => r.date.split('-')[1]))];
+  const days = [...new Set(mockReports.map(r => r.date.split('-')[2]))];
+
+  const filteredReports = useMemo(() => {
+    return mockReports.filter(r => {
+      const [y, m, d] = r.date.split('-');
+      if (filterYear !== 'all' && y !== filterYear) return false;
+      if (filterMonth !== 'all' && m !== filterMonth) return false;
+      if (filterDay !== 'all' && d !== filterDay) return false;
+      return true;
+    });
+  }, [filterYear, filterMonth, filterDay]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,57 +132,76 @@ const PatientPortal = () => {
               {portal.logout}
             </Button>
           </div>
-
-          {/* Quick stats */}
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            <Card className="bg-card/80">
-              <CardContent className="p-4 flex items-center gap-3">
-                <FileText className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-2xl font-bold text-foreground">{mockReports.length}</p>
-                  <p className="text-xs text-muted-foreground">{portal.totalReports}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="bg-card/80">
-              <CardContent className="p-4 flex items-center gap-3">
-                <ShieldCheck className="w-5 h-5 text-green-500" />
-                <div>
-                  <p className="text-sm font-semibold text-green-600">{portal.allReady}</p>
-                  <p className="text-xs text-muted-foreground">{portal.reportStatus}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </div>
 
-      {/* Reports list */}
+      {/* Reports list with filters */}
       <div className="container py-8">
-        <h2 className="text-xl font-semibold text-foreground mb-5">{portal.myReports}</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <h2 className="text-xl font-semibold text-foreground">{portal.myReports}</h2>
+          <div className="flex items-center gap-2">
+            <Filter className="w-4 h-4 text-muted-foreground" />
+            <Select value={filterYear} onValueChange={setFilterYear}>
+              <SelectTrigger className="w-24 h-9 text-xs">
+                <SelectValue placeholder={portal.year} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{portal.allYears}</SelectItem>
+                {years.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={filterMonth} onValueChange={setFilterMonth}>
+              <SelectTrigger className="w-24 h-9 text-xs">
+                <SelectValue placeholder={portal.month} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{portal.allMonths}</SelectItem>
+                {months.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={filterDay} onValueChange={setFilterDay}>
+              <SelectTrigger className="w-20 h-9 text-xs">
+                <SelectValue placeholder={portal.day} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{portal.allDays}</SelectItem>
+                {days.map(d => <SelectItem key={d} value={d}>{d}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
         <div className="space-y-3">
-          {mockReports.map(report => (
-            <Card key={report.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-5 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${report.category === 'lab' ? 'bg-blue-50 text-blue-600' : 'bg-purple-50 text-purple-600'}`}>
-                    <FileText className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">{report[`type${nameKey}` as keyof typeof report] as string}</p>
-                    <div className="flex items-center gap-3 mt-0.5">
-                      <span className="text-xs text-muted-foreground">{report.date}</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium">{portal.ready}</span>
-                    </div>
-                  </div>
-                </div>
-                <Button size="sm" variant="outline" className="gap-2">
-                  <Download className="w-4 h-4" />
-                  {portal.download}
-                </Button>
+          {filteredReports.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center text-muted-foreground">
+                {portal.noResults}
               </CardContent>
             </Card>
-          ))}
+          ) : (
+            filteredReports.map(report => (
+              <Card key={report.id} className="hover:shadow-md transition-shadow">
+                <CardContent className="p-5 flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${report.category === 'lab' ? 'bg-primary/10 text-primary' : 'bg-accent text-accent-foreground'}`}>
+                      <FileText className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">{report[`type${nameKey}` as keyof typeof report] as string}</p>
+                      <div className="flex items-center gap-3 mt-0.5">
+                        <span className="text-xs text-muted-foreground">{report.date}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{portal.ready}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Button size="sm" variant="outline" className="gap-2">
+                    <Download className="w-4 h-4" />
+                    {portal.download}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>
