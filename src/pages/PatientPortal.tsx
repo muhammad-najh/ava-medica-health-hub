@@ -3,7 +3,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { FileText, Download, User, Lock, LogOut } from 'lucide-react';
+import { FileText, Download, User, LogOut } from 'lucide-react';
 import patientPortalHero from '@/assets/patient-portal-hero.jpg';
 
 const mockReports = [
@@ -18,12 +18,11 @@ const PatientPortal = () => {
   const portal = t.portal;
   const [loggedIn, setLoggedIn] = useState(false);
   const [patientId, setPatientId] = useState('');
-  const [password, setPassword] = useState('');
   const nameKey = lang === 'ar' ? 'Ar' : lang === 'ku' ? 'Ku' : 'En';
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (patientId && password) setLoggedIn(true);
+    if (patientId) setLoggedIn(true);
   };
 
   if (!loggedIn) {
@@ -42,13 +41,6 @@ const PatientPortal = () => {
                 <div className="relative">
                   <User className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input value={patientId} onChange={e => setPatientId(e.target.value)} className="ps-10" placeholder={portal.patientIdPlaceholder} />
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-foreground mb-1 block">{portal.password}</label>
-                <div className="relative">
-                  <Lock className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input type="password" value={password} onChange={e => setPassword(e.target.value)} className="ps-10" placeholder="••••••••" />
                 </div>
               </div>
               <Button type="submit" className="w-full">{portal.login}</Button>
