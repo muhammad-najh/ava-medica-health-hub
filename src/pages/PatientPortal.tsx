@@ -132,38 +132,76 @@ const PatientPortal = () => {
               {portal.logout}
             </Button>
           </div>
-
-        </div>
-      </div>
         </div>
       </div>
 
-      {/* Reports list */}
+      {/* Reports list with filters */}
       <div className="container py-8">
-        <h2 className="text-xl font-semibold text-foreground mb-5">{portal.myReports}</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <h2 className="text-xl font-semibold text-foreground">{portal.myReports}</h2>
+          <div className="flex items-center gap-2">
+            <Filter className="w-4 h-4 text-muted-foreground" />
+            <Select value={filterYear} onValueChange={setFilterYear}>
+              <SelectTrigger className="w-24 h-9 text-xs">
+                <SelectValue placeholder={portal.year} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{portal.allYears}</SelectItem>
+                {years.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={filterMonth} onValueChange={setFilterMonth}>
+              <SelectTrigger className="w-24 h-9 text-xs">
+                <SelectValue placeholder={portal.month} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{portal.allMonths}</SelectItem>
+                {months.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={filterDay} onValueChange={setFilterDay}>
+              <SelectTrigger className="w-20 h-9 text-xs">
+                <SelectValue placeholder={portal.day} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{portal.allDays}</SelectItem>
+                {days.map(d => <SelectItem key={d} value={d}>{d}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
         <div className="space-y-3">
-          {mockReports.map(report => (
-            <Card key={report.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-5 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${report.category === 'lab' ? 'bg-blue-50 text-blue-600' : 'bg-purple-50 text-purple-600'}`}>
-                    <FileText className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">{report[`type${nameKey}` as keyof typeof report] as string}</p>
-                    <div className="flex items-center gap-3 mt-0.5">
-                      <span className="text-xs text-muted-foreground">{report.date}</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium">{portal.ready}</span>
-                    </div>
-                  </div>
-                </div>
-                <Button size="sm" variant="outline" className="gap-2">
-                  <Download className="w-4 h-4" />
-                  {portal.download}
-                </Button>
+          {filteredReports.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center text-muted-foreground">
+                {portal.noResults}
               </CardContent>
             </Card>
-          ))}
+          ) : (
+            filteredReports.map(report => (
+              <Card key={report.id} className="hover:shadow-md transition-shadow">
+                <CardContent className="p-5 flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${report.category === 'lab' ? 'bg-primary/10 text-primary' : 'bg-accent text-accent-foreground'}`}>
+                      <FileText className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">{report[`type${nameKey}` as keyof typeof report] as string}</p>
+                      <div className="flex items-center gap-3 mt-0.5">
+                        <span className="text-xs text-muted-foreground">{report.date}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{portal.ready}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Button size="sm" variant="outline" className="gap-2">
+                    <Download className="w-4 h-4" />
+                    {portal.download}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>
