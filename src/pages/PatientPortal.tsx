@@ -3,7 +3,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { FileText, Download, User, LogOut, Calendar, ShieldCheck, Activity, Clock, Phone } from 'lucide-react';
+import { FileText, Download, User, LogOut, Calendar as CalendarIcon, ShieldCheck, Activity, Clock } from 'lucide-react';
 import patientPortalHero from '@/assets/patient-portal-hero.jpg';
 
 const mockReports = [
@@ -18,12 +18,12 @@ const PatientPortal = () => {
   const portal = t.portal;
   const [loggedIn, setLoggedIn] = useState(false);
   const [patientId, setPatientId] = useState('');
-  const [phone, setPhone] = useState('');
+  const [dob, setDob] = useState('');
   const nameKey = lang === 'ar' ? 'Ar' : lang === 'ku' ? 'Ku' : 'En';
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (patientId && phone) setLoggedIn(true);
+    if (patientId && dob) setLoggedIn(true);
   };
 
   if (!loggedIn) {
@@ -62,15 +62,15 @@ const PatientPortal = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">{portal.phoneVerify}</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block">{portal.dobLabel}</label>
                   <div className="relative">
-                    <Phone className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <CalendarIcon className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
+                      value={dob}
+                      onChange={e => setDob(e.target.value)}
                       className="ps-10 h-12"
-                      placeholder={portal.phonePlaceholder}
-                      type="tel"
+                      placeholder={portal.dobPlaceholder}
+                      type="date"
                     />
                   </div>
                 </div>
@@ -137,7 +137,7 @@ const PatientPortal = () => {
             </Card>
             <Card className="bg-card/80">
               <CardContent className="p-4 flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-primary" />
+                <CalendarIcon className="w-5 h-5 text-primary" />
                 <div>
                   <p className="text-2xl font-bold text-foreground">{mockReports[0]?.date}</p>
                   <p className="text-xs text-muted-foreground">{portal.lastVisit}</p>
