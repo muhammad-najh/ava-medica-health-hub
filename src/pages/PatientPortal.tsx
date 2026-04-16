@@ -115,9 +115,11 @@ const PatientPortal = () => {
   // Dashboard
   return (
     <div className="min-h-[70vh]">
-      {/* Dashboard header */}
-      <div className="bg-gradient-to-b from-primary/5 to-transparent border-b border-border">
-        <div className="container py-8">
+      {/* Dashboard header with hero image */}
+      <div className="relative overflow-hidden border-b border-border">
+        <img src={patientDashboardHero} alt="" className="absolute inset-0 w-full h-full object-cover opacity-15" width={1280} height={512} />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70" />
+        <div className="container py-10 relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
