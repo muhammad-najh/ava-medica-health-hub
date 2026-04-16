@@ -13,6 +13,7 @@ import Events from "./pages/Events";
 import PatientPortal from "./pages/PatientPortal";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
+import Promotions from "./pages/Promotions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/patient-portal" element={<PatientPortal />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/promotions" element={<Promotions />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
