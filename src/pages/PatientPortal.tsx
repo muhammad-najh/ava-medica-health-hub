@@ -137,7 +137,7 @@ const PatientPortal = () => {
             </Card>
             <Card className="bg-card/80">
               <CardContent className="p-4 flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-primary" />
+                <CalendarIcon className="w-5 h-5 text-primary" />
                 <div>
                   <p className="text-2xl font-bold text-foreground">{mockReports[0]?.date}</p>
                   <p className="text-xs text-muted-foreground">{portal.lastVisit}</p>
