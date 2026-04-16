@@ -21,7 +21,6 @@ const Navbar = () => {
     { path: '/lab', label: t.nav.lab },
     { path: '/appointment', label: t.nav.appointment },
     { path: '/events', label: t.nav.events },
-    { path: '/patient-portal', label: t.nav.portal },
     { path: '/blog', label: t.nav.blog },
     { path: '/contact', label: t.nav.contact },
   ];
@@ -35,9 +34,14 @@ const Navbar = () => {
             <Phone className="w-3.5 h-3.5" />
             <span>{t.contact.phoneValue}</span>
           </div>
-          <a href="tel:+9647509990000" className="flex items-center gap-1 bg-emergency text-emergency-foreground px-3 py-0.5 rounded-full text-xs font-semibold">
-            {t.nav.emergency}
-          </a>
+          <div className="flex items-center gap-3">
+            <Link to="/patient-portal" className="flex items-center gap-1 bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-0.5 rounded-full text-xs font-semibold transition-colors">
+              {t.nav.portal}
+            </Link>
+            <a href="tel:+9647509990000" className="flex items-center gap-1 bg-emergency text-emergency-foreground px-3 py-0.5 rounded-full text-xs font-semibold">
+              {t.nav.emergency}
+            </a>
+          </div>
         </div>
       </div>
 
